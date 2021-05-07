@@ -1,0 +1,14 @@
+material miro_table/Diffuse
+{
+  receive_shadows off
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture Agathis_lanceolata_MHNT.BOT.2010.6.70_modified.jpg
+      }
+    }
+  }
+}

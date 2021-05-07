@@ -1,0 +1,5 @@
+Example clients in this directory use the ROS interface directly.
+
+Directory "robot"
+	Example clients that use the Python RobotInterface class to hide the ROS interface.
+
