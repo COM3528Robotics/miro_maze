@@ -32,7 +32,6 @@
 	SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	
 -->
-
 <sdf version='1.6'>
   <world name='default'>
     <physics name='default_physics' default='0' type='ode'>
@@ -1493,17 +1492,17 @@
     </spherical_coordinates>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose frame=''>18.4973 -4.78974 14.869 -0 0.833799 2.77588</pose>
-        <view_controller>orbit</view_controller>
-        <projection_type>perspective</projection_type>
+        <pose frame=''>17.5698 -2.40955 6.68406 -0 0.537798 2.90781</pose>
+        <view_controller>ortho</view_controller>
+        <projection_type>orthographic</projection_type>
       </camera>
     </gui>
     <wind/>
     <state world_name='default'>
-      <sim_time>372 551000000</sim_time>
-      <real_time>355 197352214</real_time>
-      <wall_time>1620145999 175451401</wall_time>
-      <iterations>321580</iterations>
+      <sim_time>1045 294000000</sim_time>
+      <real_time>643 71489777</real_time>
+      <wall_time>1620417941 199930972</wall_time>
+      <iterations>596478</iterations>
       <model name='ground_plane'>
         <pose frame=''>0 0 -1 0 -0 0</pose>
         <scale>1 1 1</scale>
@@ -1515,221 +1514,311 @@
         </link>
       </model>
       <model name='maze1'>
-        <pose frame=''>5.65353 0.015639 -2.7198 0 -0 0</pose>
+        <pose frame=''>5.79382 0.042866 -1.99551 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='Wall_272'>
-          <pose frame=''>8.35353 0.440639 -2.7198 0 -0 3.14159</pose>
+          <pose frame=''>8.49382 0.467866 -1.99551 0 -0 3.14159</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='Wall_281'>
-          <pose frame=''>7.42853 2.36564 -2.7198 0 -0 1.5708</pose>
+          <pose frame=''>7.56882 2.39287 -1.99551 0 -0 1.5708</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='Wall_294'>
-          <pose frame=''>5.65353 3.44064 -2.7198 0 -0 3.14159</pose>
+          <pose frame=''>5.79382 3.46787 -1.99551 0 -0 3.14159</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='Wall_299'>
-          <pose frame=''>5.65353 -3.40936 -2.7198 0 -0 3.14159</pose>
+          <pose frame=''>5.79382 -3.38213 -1.99551 0 -0 3.14159</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='Wall_301'>
-          <pose frame=''>6.57853 0.015639 -2.7198 0 0 -1.5708</pose>
+          <pose frame=''>6.71882 0.042866 -1.99551 0 0 -1.5708</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='Wall_306'>
-          <pose frame=''>6.07853 -4.25936 -2.7198 0 -0 0</pose>
+          <pose frame=''>6.21882 -4.23213 -1.99551 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='Wall_309'>
-          <pose frame=''>8.35353 -0.409361 -2.7198 0 -0 3.14159</pose>
+          <pose frame=''>8.49382 -0.382134 -1.99551 0 -0 3.14159</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='Wall_311'>
-          <pose frame=''>7.42853 -2.33436 -2.7198 0 0 -1.5708</pose>
+          <pose frame=''>7.56882 -2.30713 -1.99551 0 0 -1.5708</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='Wall_314'>
-          <pose frame=''>6.07853 4.29064 -2.7198 0 -0 0</pose>
+          <pose frame=''>6.21882 4.31787 -1.99551 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='Wall_316'>
-          <pose frame=''>4.72853 2.01564 -2.7198 0 0 -1.5708</pose>
+          <pose frame=''>4.86882 2.04287 -1.99551 0 0 -1.5708</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='Wall_318'>
-          <pose frame=''>4.72853 -1.98436 -2.7198 0 -0 1.5708</pose>
+          <pose frame=''>4.86882 -1.95713 -1.99551 0 -0 1.5708</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='Wall_323'>
-          <pose frame=''>4.72853 -5.68436 -2.7198 0 0 -1.5708</pose>
+          <pose frame=''>4.86882 -5.65713 -1.99551 0 0 -1.5708</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='Wall_326'>
-          <pose frame=''>2.95353 -6.25936 -2.7198 0 -0 3.14159</pose>
+          <pose frame=''>3.09382 -6.23213 -1.99551 0 -0 3.14159</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='Wall_329'>
-          <pose frame=''>2.95353 -1.40936 -2.7198 0 -0 3.14159</pose>
+          <pose frame=''>3.09382 -1.38213 -1.99551 0 -0 3.14159</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='Wall_331'>
-          <pose frame=''>3.87853 -3.83436 -2.7198 0 0 -1.5708</pose>
+          <pose frame=''>4.01882 -3.80713 -1.99551 0 0 -1.5708</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='Wall_333'>
-          <pose frame=''>4.72853 5.71564 -2.7198 0 -0 1.5708</pose>
+          <pose frame=''>4.86882 5.74287 -1.99551 0 -0 1.5708</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='Wall_336'>
-          <pose frame=''>2.95353 6.29064 -2.7198 0 -0 3.14159</pose>
+          <pose frame=''>3.09382 6.31787 -1.99551 0 -0 3.14159</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='Wall_339'>
-          <pose frame=''>2.95353 1.44064 -2.7198 0 -0 3.14159</pose>
+          <pose frame=''>3.09382 1.46787 -1.99551 0 -0 3.14159</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='Wall_341'>
-          <pose frame=''>3.87853 3.86564 -2.7198 0 -0 1.5708</pose>
+          <pose frame=''>4.01882 3.89287 -1.99551 0 -0 1.5708</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='Wall_347'>
-          <pose frame=''>3.37853 0.590639 -2.7198 0 -0 0</pose>
+          <pose frame=''>3.51882 0.617866 -1.99551 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='Wall_349'>
-          <pose frame=''>3.37853 -0.559361 -2.7198 0 -0 0</pose>
+          <pose frame=''>3.51882 -0.532134 -1.99551 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='Wall_353'>
-          <pose frame=''>3.37853 -7.10936 -2.7198 0 -0 0</pose>
+          <pose frame=''>3.51882 -7.08213 -1.99551 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='Wall_358'>
-          <pose frame=''>3.37853 7.14064 -2.7198 0 -0 3.14159</pose>
+          <pose frame=''>3.51882 7.16787 -1.99551 0 -0 3.14159</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='miro'>
-        <pose frame=''>8.71536 -0.013481 -0.999636 2.9e-05 -0.108205 -3.12741</pose>
+        <pose frame=''>8.70597 -0.015657 -0.999636 3e-05 -0.108204 3.08868</pose>
         <scale>1 1 1</scale>
         <link name='miro_body::body'>
-          <pose frame=''>8.71536 -0.013481 -0.999636 2.9e-05 -0.108205 -3.12741</pose>
-          <velocity>-1e-05 -0.002313 8.2e-05 -0.060475 -0.000202 -0.006225</velocity>
-          <acceleration>0.154127 0.672747 -0.021478 -1.02506 -0.680913 0.056594</acceleration>
-          <wrench>0.242103 1.05675 -0.033738 0 -0 0</wrench>
+          <pose frame=''>8.70597 -0.015657 -0.999636 3e-05 -0.108204 3.08868</pose>
+          <velocity>-0.000312 -0.00232 0.000134 -0.063043 0.004573 0.001525</velocity>
+          <acceleration>-0.026942 0.590175 0.200752 3.02225 -1.54668 1.9255</acceleration>
+          <wrench>-0.042321 0.927047 0.315341 0 -0 0</wrench>
         </link>
         <link name='miro_body::wheel_lh'>
-          <pose frame=''>8.71653 -0.013452 -0.999716 -0.000201 -0.080863 -3.12668</pose>
-          <velocity>0.000468 -2.6e-05 0.002885 -0.026788 -0.00802 -0.006131</velocity>
-          <acceleration>0.265019 2.47296 9.9926 1.42374 0.328181 1.93895</acceleration>
-          <wrench>0.035523 0.331478 1.33942 0 -0 0</wrench>
+          <pose frame=''>8.70721 -0.015711 -0.999721 -0.000203 -0.079043 3.08946</pose>
+          <velocity>-0.000128 -4.9e-05 0.002932 -0.029767 0.001271 0.001588</velocity>
+          <acceleration>-0.028248 2.46371 10.4858 -1.37366 -0.183181 -2.48967</acceleration>
+          <wrench>-0.003786 0.330237 1.40553 0 -0 0</wrench>
         </link>
         <link name='miro_body::wheel_rh'>
-          <pose frame=''>8.71721 -0.013465 -0.999759 0.000256 -0.064782 -3.12856</pose>
-          <velocity>-0.000101 -0.000135 -0.002673 -0.027669 -0.000278 -0.006051</velocity>
-          <acceleration>0.148151 2.397 -10.1578 -1.32729 1.31652 -0.833643</acceleration>
-          <wrench>0.019858 0.321297 -1.36156 0 -0 0</wrench>
+          <pose frame=''>8.70763 -0.015755 -0.999749 0.000249 -0.069201 3.08765</pose>
+          <velocity>-0.000219 -0.000145 -0.002628 -0.030487 0.002033 0.001758</velocity>
+          <acceleration>0.09621 2.37678 -9.56097 2.45546 -0.625141 1.15558</acceleration>
+          <wrench>0.012896 0.318586 -1.28156 0 -0 0</wrench>
         </link>
         <link name='miro_gmbl::gmbl'>
-          <pose frame=''>8.76146 -0.012825 -0.992222 5e-06 0.476462 -3.12742</pose>
-          <velocity>-9.7e-05 0.000496 5.1e-05 -0.020779 -0.000457 -0.011591</velocity>
-          <acceleration>-0.071298 9.07049 0.002307 0.061053 -0.674277 2.54798</acceleration>
-          <wrench>-0.0028 0.356198 9.1e-05 0 -0 0</wrench>
+          <pose frame=''>8.75202 -0.018094 -0.992221 1.4e-05 0.476508 3.08869</pose>
+          <velocity>3.5e-05 0.001148 7.4e-05 -0.019584 0.000703 -0.005469</velocity>
+          <acceleration>0.631124 9.1911 0.358118 -2.88996 1.49829 1.78582</acceleration>
+          <wrench>0.024784 0.360935 0.014063 0 -0 0</wrench>
         </link>
         <link name='miro_head::ear_lh'>
-          <pose frame=''>8.74586 -0.034945 -1 0.043806 0.39808 3.01737</pose>
-          <velocity>-3.2e-05 0.012682 -0.000877 0.039554 0.001093 0.022209</velocity>
-          <acceleration>3.03521 -0.686347 -4.13612 1.02139 0.609183 1.09614</acceleration>
-          <wrench>0.171638 -0.038812 -0.233894 0 -0 0</wrench>
+          <pose frame=''>8.73491 -0.039121 -1.00002 0.043865 0.397799 2.95026</pose>
+          <velocity>0.001313 0.015122 -0.001142 0.049498 -0.0023 0.033696</velocity>
+          <acceleration>2.23732 -0.435764 -3.87844 -0.790236 -0.982285 2.18209</acceleration>
+          <wrench>0.126518 -0.024642 -0.219322 0 -0 0</wrench>
         </link>
         <link name='miro_head::ear_rh'>
-          <pose frame=''>8.74589 0.00809 -0.999758 -0.042053 0.400759 -2.99413</pose>
-          <velocity>-0.000973 0.012616 0.000831 0.03912 0.000942 0.02239</velocity>
-          <acceleration>-3.05995 -0.661625 4.25426 -0.013935 0.446934 1.23066</acceleration>
-          <wrench>-0.173037 -0.037414 0.240574 0 -0 0</wrench>
+          <pose frame=''>8.73791 0.003703 -0.999744 -0.04182 0.400901 -3.06198</pose>
+          <velocity>-0.000101 0.015106 0.000995 0.048876 -0.002506 0.033815</velocity>
+          <acceleration>-2.75549 -0.069477 4.36565 -1.88441 -1.11779 2.23488</acceleration>
+          <wrench>-0.15582 -0.003929 0.246873 0 -0 0</wrench>
         </link>
         <link name='miro_head::eyelid_lh'>
-          <pose frame=''>8.70238 -0.08028 -1.02136 0.288431 0.199753 -3.04723</pose>
-          <velocity>0.000342 0.011859 -0.00274 0.036662 0.003682 0.022513</velocity>
-          <acceleration>2.06851 0.786981 -2.80194 1.50272 -0.399855 1.47865</acceleration>
-          <wrench>0.034658 0.013186 -0.046946 0 -0 0</wrench>
+          <pose frame=''>8.68849 -0.081432 -1.02137 0.288413 0.199495 -3.11431</pose>
+          <velocity>0.002127 0.013936 -0.003466 0.046744 0.000528 0.034035</velocity>
+          <acceleration>1.69058 1.6044 -2.67433 -2.98255 -1.43882 -0.646369</acceleration>
+          <wrench>0.028326 0.026882 -0.044808 0 -0 0</wrench>
         </link>
         <link name='miro_head::eyelid_rh'>
-          <pose frame=''>8.67154 0.08373 -1.02278 -0.406465 0.072624 3.06685</pose>
-          <velocity>-0.002017 0.011218 0.003857 0.036649 -0.001813 0.022371</velocity>
-          <acceleration>-2.03968 0.754381 2.89963 1.43335 1.20504 1.15651</acceleration>
-          <wrench>-0.034175 0.01264 0.048583 0 -0 0</wrench>
+          <pose frame=''>8.66871 0.084275 -1.02278 -0.40644 0.072367 2.99978</pose>
+          <velocity>-0.002181 0.013274 0.004772 0.046495 -0.004934 0.033879</velocity>
+          <acceleration>-1.67268 1.80793 2.92707 -0.488873 0.275933 2.19948</acceleration>
+          <wrench>-0.028026 0.030292 0.049043 0 -0 0</wrench>
         </link>
         <link name='miro_head::head'>
-          <pose frame=''>8.76082 -0.012829 -0.992545 -2.4e-05 0.472889 -3.12742</pose>
-          <velocity>-0.00049 0.012666 -6e-06 0.038771 0.000955 0.022345</velocity>
-          <acceleration>-0.036724 4.86674 0.071176 -0.969257 0.690915 0.942456</acceleration>
-          <wrench>-0.009614 1.27411 0.018634 0 -0 0</wrench>
+          <pose frame=''>8.75133 -0.018051 -0.992571 -2.1e-05 0.472631 3.08869</pose>
+          <velocity>0.000623 0.01517 -3.4e-05 0.048367 -0.002454 0.033692</velocity>
+          <acceleration>0.239255 5.28757 0.24348 -2.7196 -1.10077 1.9894</acceleration>
+          <wrench>0.062637 1.38428 0.063743 0 -0 0</wrench>
         </link>
         <link name='miro_neck::neck'>
-          <pose frame=''>8.76146 -0.012827 -0.992222 1.6e-05 0.476455 -3.12741</pose>
-          <velocity>-0.000196 -0.003675 -4.6e-05 -0.030258 0.000922 -0.034721</velocity>
-          <acceleration>0.02509 4.43545 -0.046342 -1.29668 1.17142 1.61693</acceleration>
-          <wrench>0.001892 0.334424 -0.003494 0 -0 0</wrench>
+          <pose frame=''>8.75202 -0.018096 -0.99222 1.6e-05 0.476502 3.08868</pose>
+          <velocity>-0.000526 -0.003458 -3.5e-05 -0.029433 0.003311 -0.030106</velocity>
+          <acceleration>0.331728 4.61551 0.393728 -1.07615 0.454093 -0.029549</acceleration>
+          <wrench>0.025012 0.348 0.029686 0 -0 0</wrench>
         </link>
         <link name='miro_tail::tail'>
-          <pose frame=''>8.71548 -0.013483 -0.999909 2.5e-05 -0.106401 -3.12738</pose>
-          <velocity>1.4e-05 -0.002381 -1.5e-05 -0.059933 -0.000776 -0.005781</velocity>
-          <acceleration>0.074121 3.73411 0.017406 -0.444555 -0.968541 2.86104</acceleration>
-          <wrench>0.004191 0.21116 0.000984 0 -0 0</wrench>
+          <pose frame=''>8.7061 -0.015725 -0.99993 -1.6e-05 -0.106261 3.08911</pose>
+          <velocity>-0.000257 -0.002395 2e-05 -0.062508 0.003693 0.002042</velocity>
+          <acceleration>0.242529 3.52627 -0.1787 0.301067 -1.42918 1.62505</acceleration>
+          <wrench>0.013715 0.199407 -0.010105 0 -0 0</wrench>
         </link>
         <link name='miro_tail::tail_gmbl'>
-          <pose frame=''>8.71548 -0.013479 -0.999909 2.9e-05 -0.106401 -3.12741</pose>
-          <velocity>1.3e-05 -0.002401 -1.6e-05 -0.060162 -0.00078 -0.005793</velocity>
-          <acceleration>0.070525 3.7252 0.015455 -0.925979 -1.00629 2.84994</acceleration>
-          <wrench>0.003988 0.210656 0.000874 0 -0 0</wrench>
+          <pose frame=''>8.70611 -0.015664 -0.99993 3e-05 -0.10626 3.08868</pose>
+          <velocity>-0.000253 -0.002416 1.2e-05 -0.06276 0.003668 0.002041</velocity>
+          <acceleration>0.243704 3.51865 -0.179368 -0.184942 -1.46984 1.62951</acceleration>
+          <wrench>0.013781 0.198976 -0.010143 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='tag'>
+        <pose frame=''>5.8152 0.048743 -0.230062 2.88868 -1.55848 0.249248</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>5.8152 0.048743 -0.230062 2.88868 -1.55848 0.249248</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='tag_0'>
+        <pose frame=''>3.10596 -3.8 -0.231368 3.14159 -1.55244 0.006398</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>3.10596 -3.8 -0.231368 3.14159 -1.55244 0.006398</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='tag_1'>
+        <pose frame=''>3.08647 3.86233 -0.254881 0 -1.56306 3.1404</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>3.08647 3.86233 -0.254881 0 -1.56306 3.1404</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='tag_2'>
+        <pose frame=''>7.09814 -5.13887 -0.257698 0 -1.5575 -1.57755</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>7.09814 -5.13887 -0.257698 0 -1.5575 -1.57755</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='tag_3'>
+        <pose frame=''>4.40357 -8.00714 -0.250823 1e-06 -1.56992 -1.56991</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>4.40357 -8.00714 -0.250823 1e-06 -1.56992 -1.56991</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='tag_4'>
+        <pose frame=''>4.45105 -0.269034 -0.233423 -7e-06 -1.55897 -1.57734</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>4.45105 -0.269034 -0.233423 -7e-06 -1.55897 -1.57734</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='tag_5'>
+        <pose frame=''>4.41991 0.387045 -0.243293 3.14159 -1.56033 -1.56413</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>4.41991 0.387045 -0.243293 3.14159 -1.56033 -1.56413</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='tag_6'>
+        <pose frame=''>4.3961 8.08989 -0.258199 -0.007421 -1.5578 1.59604</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>4.3961 8.08989 -0.258199 -0.007421 -1.5578 1.59604</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='tag_7'>
+        <pose frame=''>7.12402 5.25123 -0.256821 -1.3e-05 -1.56969 1.5738</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>7.12402 5.25123 -0.256821 -1.3e-05 -1.56969 1.5738</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <light name='sun'>
@@ -2774,6 +2863,438 @@
         <kinematic>0</kinematic>
       </link>
       <static>1</static>
+    </model>
+    <model name='tag'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='surface'>
+          <pose frame=''>0 0 1 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>1.5 0.8 0.03</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.6</mu>
+                <mu2>0.6</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual1'>
+          <pose frame=''>0 0 1 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>1.5 0.8 0.03</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://miro_tag/materials/scripts</uri>
+              <uri>model://miro_tag/materials/textures</uri>
+              <name>miro_tag/Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>8.13412 -0.30969 0 0 -0 0</pose>
+    </model>
+    <model name='tag_0'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='surface'>
+          <pose frame=''>0 0 1 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>1.5 0.8 0.03</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.6</mu>
+                <mu2>0.6</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual1'>
+          <pose frame=''>0 0 1 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>1.5 0.8 0.03</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://miro_tag/materials/scripts</uri>
+              <uri>model://miro_tag/materials/textures</uri>
+              <name>miro_tag/Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>4.26383 -3.88207 0 0 -0 0</pose>
+    </model>
+    <model name='tag_1'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='surface'>
+          <pose frame=''>0 0 1 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>1.5 0.8 0.03</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.6</mu>
+                <mu2>0.6</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual1'>
+          <pose frame=''>0 0 1 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>1.5 0.8 0.03</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://miro_tag/materials/scripts</uri>
+              <uri>model://miro_tag/materials/textures</uri>
+              <name>miro_tag/Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>4.48406 3.72838 0 0 -0 0</pose>
+    </model>
+    <model name='tag_2'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='surface'>
+          <pose frame=''>0 0 1 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>1.5 0.8 0.03</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.6</mu>
+                <mu2>0.6</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual1'>
+          <pose frame=''>0 0 1 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>1.5 0.8 0.03</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://miro_tag1/materials/scripts</uri>
+              <uri>model://miro_tag1/materials/textures</uri>
+              <name>miro_tag1/Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>6.8395 -4.15135 0 0 -0 0</pose>
+    </model>
+    <model name='tag_3'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='surface'>
+          <pose frame=''>0 0 1 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>1.5 0.8 0.03</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.6</mu>
+                <mu2>0.6</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual1'>
+          <pose frame=''>0 0 1 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>1.5 0.8 0.03</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://miro_tag1/materials/scripts</uri>
+              <uri>model://miro_tag1/materials/textures</uri>
+              <name>miro_tag1/Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>4.37452 -6.91923 0 0 -0 0</pose>
+    </model>
+    <model name='tag_4'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='surface'>
+          <pose frame=''>0 0 1 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>1.5 0.8 0.03</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.6</mu>
+                <mu2>0.6</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual1'>
+          <pose frame=''>0 0 1 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>1.5 0.8 0.03</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://miro_tag1/materials/scripts</uri>
+              <uri>model://miro_tag1/materials/textures</uri>
+              <name>miro_tag1/Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>4.46171 1.35694 0 0 -0 0</pose>
+    </model>
+    <model name='tag_5'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='surface'>
+          <pose frame=''>0 0 1 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>1.5 0.8 0.03</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.6</mu>
+                <mu2>0.6</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual1'>
+          <pose frame=''>0 0 1 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>1.5 0.8 0.03</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://miro_tag2/materials/scripts</uri>
+              <uri>model://miro_tag2/materials/textures</uri>
+              <name>miro_tag2/Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>4.4299 -1.11238 0 0 -0 0</pose>
+    </model>
+    <model name='tag_6'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='surface'>
+          <pose frame=''>0 0 1 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>1.5 0.8 0.03</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.6</mu>
+                <mu2>0.6</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual1'>
+          <pose frame=''>0 0 1 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>1.5 0.8 0.03</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://miro_tag2/materials/scripts</uri>
+              <uri>model://miro_tag2/materials/textures</uri>
+              <name>miro_tag2/Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>4.4325 6.64821 0 0 -0 0</pose>
+    </model>
+    <model name='tag_7'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='surface'>
+          <pose frame=''>0 0 1 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>1.5 0.8 0.03</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.6</mu>
+                <mu2>0.6</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual1'>
+          <pose frame=''>0 0 1 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>1.5 0.8 0.03</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://miro_tag2/materials/scripts</uri>
+              <uri>model://miro_tag2/materials/textures</uri>
+              <name>miro_tag2/Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>7.26511 3.69423 0 0 -0 0</pose>
     </model>
   </world>
 </sdf>
