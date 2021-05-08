@@ -1,36 +1,36 @@
 <?xml version="1.0"?>
 <!--
-	@section COPYRIGHT
-	Copyright (C) 2020 Consequential Robotics Ltd
-	
-	@section AUTHOR
-	Consequential Robotics http://consequentialrobotics.com
-	
-	@section LICENSE
-	For a full copy of the license agreement, and a complete
-	definition of "The Software", see LICENSE in the MDK root
-	directory.
-	
-	Subject to the terms of this Agreement, Consequential
-	Robotics grants to you a limited, non-exclusive, non-
-	transferable license, without right to sub-license, to use
-	"The Software" in accordance with this Agreement and any
-	other written agreement with Consequential Robotics.
-	Consequential Robotics does not transfer the title of "The
-	Software" to you; the license granted to you is not a sale.
-	This agreement is a binding legal agreement between
-	Consequential Robotics and the purchasers or users of "The
-	Software".
-	
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY
-	KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
-	WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
-	PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
-	OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
-	OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-	OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-	SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-	
+  @section COPYRIGHT
+  Copyright (C) 2020 Consequential Robotics Ltd
+  
+  @section AUTHOR
+  Consequential Robotics http://consequentialrobotics.com
+  
+  @section LICENSE
+  For a full copy of the license agreement, and a complete
+  definition of "The Software", see LICENSE in the MDK root
+  directory.
+  
+  Subject to the terms of this Agreement, Consequential
+  Robotics grants to you a limited, non-exclusive, non-
+  transferable license, without right to sub-license, to use
+  "The Software" in accordance with this Agreement and any
+  other written agreement with Consequential Robotics.
+  Consequential Robotics does not transfer the title of "The
+  Software" to you; the license granted to you is not a sale.
+  This agreement is a binding legal agreement between
+  Consequential Robotics and the purchasers or users of "The
+  Software".
+  
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY
+  KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+  WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+  PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
+  OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+  OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  
 -->
 <sdf version='1.6'>
   <world name='default'>
@@ -1732,90 +1732,90 @@
         </link>
       </model>
       <model name='tag'>
-        <pose frame=''>5.8152 0.048743 -0.6 2.88868 -1.55848 0.249248</pose>
-        <scale>1 1 1</scale>
+        <pose frame=''>5.8152 0.048743 -0.0.7 2.88868 -1.55848 0.249248</pose>
+        <scale>0.75 0.75 1</scale>
         <link name='link'>
-          <pose frame=''>5.8152 0.048743 -0.6 2.88868 -1.55848 0.249248</pose>
+          <pose frame=''>5.8152 0.048743 -0.7 2.88868 -1.55848 0.249248</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='tag_0'>
-        <pose frame=''>3.10596 -3.8 -0.6 3.14159 -1.55244 0.006398</pose>
-        <scale>1 1 1</scale>
+        <pose frame=''>3.10596 -3.8 -0.7 3.14159 -1.55244 0.006398</pose>
+        <scale>0.75 0.75 1</scale>
         <link name='link'>
-          <pose frame=''>3.10596 -3.8 -0.6 3.14159 -1.55244 0.006398</pose>
+          <pose frame=''>3.10596 -3.8 -0.7 3.14159 -1.55244 0.006398</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='tag_1'>
-        <pose frame=''>3.08647 3.86233 -0.6 0 -1.56306 3.1404</pose>
-        <scale>1 1 1</scale>
+        <pose frame=''>3.08647 3.86233 -0.7 0 -1.56306 3.1404</pose>
+        <scale>0.75 0.75 1</scale>
         <link name='link'>
-          <pose frame=''>3.08647 3.86233 -0.6 0 -1.56306 3.1404</pose>
+          <pose frame=''>3.08647 3.86233 -0.7 0 -1.56306 3.1404</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='tag_2'>
-        <pose frame=''>7.09814 -5.13887 -0.6 0 -1.5575 -1.57755</pose>
-        <scale>1 1 1</scale>
+        <pose frame=''>7.09814 -5.13887 -0.7 0 -1.5575 -1.57755</pose>
+        <scale>0.75 0.75 1</scale>
         <link name='link'>
-          <pose frame=''>7.09814 -5.13887 -0.6 0 -1.5575 -1.57755</pose>
+          <pose frame=''>7.09814 -5.13887 -0.7 0 -1.5575 -1.57755</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='tag_3'>
-        <pose frame=''>4.40357 -8.00714 -0.6 1e-06 -1.56992 -1.56991</pose>
-        <scale>1 1 1</scale>
+        <pose frame=''>4.40357 -8.00714 -0.7 1e-06 -1.56992 -1.56991</pose>
+        <scale>0.75 0.75 1</scale>
         <link name='link'>
-          <pose frame=''>4.40357 -8.00714 -0.6 1e-06 -1.56992 -1.56991</pose>
+          <pose frame=''>4.40357 -8.00714 -0.7 1e-06 -1.56992 -1.56991</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='tag_4'>
-        <pose frame=''>4.45105 -0.269034 -0.6 -7e-06 -1.55897 -1.57734</pose>
-        <scale>1 1 1</scale>
+        <pose frame=''>4.45105 -0.269034 -0.7 -7e-06 -1.55897 -1.57734</pose>
+        <scale>0.75 0.75 1</scale>
         <link name='link'>
-          <pose frame=''>4.45105 -0.269034 -0.6 -7e-06 -1.55897 -1.57734</pose>
+          <pose frame=''>4.45105 -0.269034 -0.7 -7e-06 -1.55897 -1.57734</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='tag_5'>
-        <pose frame=''>4.41991 0.387045 -0.6 3.14159 -1.56033 -1.56413</pose>
-        <scale>1 1 1</scale>
+        <pose frame=''>4.41991 0.387045 -0.7 3.14159 -1.56033 -1.56413</pose>
+        <scale>0.75 0.75 1</scale>
         <link name='link'>
-          <pose frame=''>4.41991 0.387045 -0.6 3.14159 -1.56033 -1.56413</pose>
+          <pose frame=''>4.41991 0.387045 -0.7 3.14159 -1.56033 -1.56413</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='tag_6'>
-        <pose frame=''>4.3961 8.08989 -0.6 -0.007421 -1.5578 1.59604</pose>
-        <scale>1 1 1</scale>
+        <pose frame=''>4.3961 8.08989 -0.7 -0.007421 -1.5578 1.59604</pose>
+        <scale>0.75 0.75 1</scale>
         <link name='link'>
-          <pose frame=''>4.3961 8.08989 -0.6 -0.007421 -1.5578 1.59604</pose>
+          <pose frame=''>4.3961 8.08989 -0.7 -0.007421 -1.5578 1.59604</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='tag_7'>
-        <pose frame=''>7.12402 5.25123 -0.6 -1.3e-05 -1.56969 1.5738</pose>
-        <scale>1 1 1</scale>
+        <pose frame=''>7.12402 5.25123 -0.7 -1.3e-05 -1.56969 1.5738</pose>
+        <scale>0.75 0.75 1</scale>
         <link name='link'>
-          <pose frame=''>7.12402 5.25123 -0.6 -1.3e-05 -1.56969 1.5738</pose>
+          <pose frame=''>7.12402 5.25123 -0.7 -1.3e-05 -1.56969 1.5738</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
