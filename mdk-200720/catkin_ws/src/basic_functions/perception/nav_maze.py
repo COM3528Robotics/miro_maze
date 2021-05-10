@@ -72,7 +72,7 @@ class MiRoClient:
 
         self.buffer_distance = [np.array([]), np.array([])]
 
-    def april_tag_decision(tag_id):
+    def decide(self, tag_id):
         decision = ""
 
         # reinforcment learning descision
@@ -236,6 +236,12 @@ class MiRoClient:
             # Decide the next action
             elif action_flag is ACTION_NEXT_DIRECTION:
                 result = self.decide(current_tag)
+
+                # TODO
+                if result == 'left':
+                    action_flag = ACTION_TURN_LEFT
+                elif result == "right"
+                    action_flag = ACTION_TURN_RIGHT
 
             # Rotate LEFT until a new tag is found, then follow
             elif action_flag is ACTION_TURN_LEFT:
