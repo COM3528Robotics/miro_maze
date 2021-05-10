@@ -1,8 +1,13 @@
 import rospy
 
+import random
+import statistics as stat
+
 import time
 import sys
 import os
+
+import numpy as np
 
 import cv2
 from apriltag_perception import AprilTagPerception
@@ -41,6 +46,12 @@ class MiRoClient:
     FAST = 0.7  # Linear speed when kicking the ball (m/s)
     DEBUG = False  # Set to True to enable debug views of the cameras
 
+    TAG_SIZE = 1
+
+    SPEED = 1
+
+    BUFFER_SIZE_DISTANCE = 10
+    THRESHOLD_DISTANCE = 2
         
 
     def __init__(self):
@@ -56,148 +67,197 @@ class MiRoClient:
             topic_base_name + "/control/kinematic_joints", JointState, queue_size=0
         )
 
-    def getFocal(atp, image):
-        tags = atp.detect_tags(image)
-        if tags is None:
-            print('No AprilTags in view!')
-            return image, None, None
+        self.miro_per = mri.MiRoPerception()
+        self.atp = AprilTagPerception(size=MiRoClient.TAG_SIZE, family='tag36h11')
+
+        self.buffer_distance = [np.array([]), np.array([])]
+
+    def april_tag_decision(tag_id):
+        decision = ""
+
+        # reinforcment learning descision
+        # hidden left
+        if tag_id == 0:
+            decision = random.choice(["left", "right"])
+        # hidden right
+        elif tag_id == 3:
+            decision = random.choice(["left", "right"])
+
+        # fixed
+        elif tag_id == 1:
+            decision = 'left'
+        elif tag_id == 2:
+            decision = 'right'
+            
+        return decision
+
+    def set_wheel_speed(self, speed_left, speed_right):
+        """Set Miro's wheel speed"""
+        wheel_speed = [speed_left, speed_right]
+        if MiRoClient.DEBUG: print("Current Speed: %.2f, %.2f" % (speed_left, speed_right))
+
+        # Convert wheel speed to command velocity (m/sec, Rad/sec)
+        (dr, dtheta) = wheel_speed2cmd_vel(wheel_speed)
+
+        # Update the message with the desired speed
+        msg_cmd_vel = TwistStamped()
+        msg_cmd_vel.twist.linear.x = dr
+        msg_cmd_vel.twist.angular.z = dtheta
+
+        # Publish message to control/cmd_vel topic
+        self.vel_pub.publish(msg_cmd_vel)
+
+    def estimate_distance(self, tag_id):
+        """Return a list of estimated distances to a specific tag for each given image"""
+        estimated_distances = []
+        for index, image in enumerate(self.images):
+            detected_tags = self.atp.detect_tags(image)
+            
+            tag_distance = None
+
+            if detected_tags:
+                for tag in detected_tags:
+                    if tag.id == tag_id:
+                        tag_distance = tag.distance
+
+                        # Print distance on screen
+                        if MiRoClient.DEBUG:
+                            self.atp.draw_box(image, tag, colour='green')
+                            self.atp.draw_center(image, tag, colour='red')
+                            cv2.putText(image, "Distance: %s" % (str(tag_distance)), tuple(tag.corners[1]),
+                                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 255), 2)
+
+                        break
+
+            estimated_distances.append(tag_distance)
+
+        if MiRoClient.DEBUG: print("Estimated distance to tag %d are: %s" % (tag_id, str(estimated_distances)))
+        return estimated_distances
+
+    def follow(self, tag_id):
+        """Follow a april tag and return True if MiRo reaches the tag, else False"""
+
+        distances = self.estimate_distance(tag_id)
+
+        for index in [0, 1]:
+            self.buffer_distance[index] = np.append(self.buffer_distance[index], distances[index])
+            self.buffer_distance[index] = self.buffer_distance[index][-MiRoClient.BUFFER_SIZE_DISTANCE:]
+
+        try:
+            d_left = stat.mean([d for d in self.buffer_distance[0] if d is not None])
+        except:
+            d_left = None
+
+        try:
+            d_right = stat.mean([d for d in self.buffer_distance[1] if d is not None])
+        except:
+            d_right = None
+
+        print("Average distance %s %s" % (str(d_left), str(d_right)))
+
+        """
+        d_left = distances[0]
+        d_right = distances[1]
+        """
+
+        speed_left_mod = 0
+        speed_right_mod = 0
+
+        # Tag is seen by both camera
+        if d_left and d_right:
+            d_delta = d_left - d_right
+
+            """ Method 1: linear
+            speed_mod = d_delta
+            """
+
+            # Method 2: Bounding 
+            bound = 0.05
+            speed_mod = max(min(d_delta, bound), -bound)
+
+            # Method 3: Sigmoid
+
+            # if d_delta is positive, left camera is further away,
+            # so left wheel need to slow down,
+            # and vice versa
+            speed_left_mod = -speed_mod
+            speed_right_mod = speed_mod
+
+        # Tag is only seen by one camera
+        elif d_left or d_right:
+            speed = 0.5
+            speed_left_mod = -speed if d_left else speed
+            speed_right_mod = -speed if d_right else speed
+
+            speed_left_mod -= MiRoClient.SPEED
+            speed_right_mod -= MiRoClient.SPEED 
+
+        # Cannot detect tag
         else:
-            focal_length, image = MiRoClient.getFocalLength(atp, tags, image)
-            return image, tags, focal_length
+            speed_left_mod = 0
+            speed_right_mod = 0
 
-    def getFocalLength(atp, tags, image):
-        focal_length = None # ?
-        tag_size = 1 # ?
-        tag_distance = 2 # ?
-        
-        for t, _ in enumerate(tags):
-            # Draw April Tag on screen
-            atp.draw_box(image, tags[t], colour='green')
-            atp.draw_center(image, tags[t], colour='red')
+        speed_left = MiRoClient.SPEED + speed_left_mod
+        speed_right = MiRoClient.SPEED + speed_right_mod
 
-            # Output either focal length or estimated distance on the image
-            if focal_length is not None:
-                est_distance = (tag_size * focal_length) / \
-                    tags[t].apparent_size
-                cv2.putText(image, 'Distance: {0:.2f}cm'.format(est_distance), tuple(tags[t].corners[1]),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 255), 2)
-                return est_distance, image
-            else:
-                est_focal_length = (
-                    tags[t].apparent_size * tag_distance) / tag_size
-                cv2.putText(image, 'Focal length: {0:.2f}'.format(est_focal_length), tuple(tags[t].corners[1]),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 255), 2)
+        self.set_wheel_speed(speed_left, speed_right)
 
-                print('Estimated focal length: {}'.format(
-                    est_focal_length))
-                return est_focal_length, image
+        # Return true if distance from either camera is within threshold
+        return d_left and d_left < MiRoClient.THRESHOLD_DISTANCE or \
+            d_right and d_right < MiRoClient.THRESHOLD_DISTANCE
 
 
 
     def loop(self):
+        ACTION_FOLLOW = 1
+        ACTION_TURN_LEFT = 2
+        ACTION_TURN_RIGHT = 3
+        ACTION_NEXT_DIRECTION = 4
 
-        miro_per = mri.MiRoPerception()
+        MiRoClient.SPEED = 0.5
 
-        # Set the actual size and distance of the AprilTag being used for calibration
-        # (Units don't matter as long as you use the same for both)
-        tag_size = 1
-        tag_distance = 2
+        MiRoClient.DEBUG = True
 
-        # Enter a value here when you obtain a focal length to test your distance measurements are accurate
-        focal_left = None
-        focal_right = None
+        current_tag = 0
+        action_flag = ACTION_FOLLOW
+        continue_condition = True
 
-        atp = AprilTagPerception(size=tag_size, family='tag36h11')
+        while(continue_condition):
+            # Update robot vision
+            self.images = [self.miro_per.caml_undistorted, self.miro_per.camr_undistorted]
+
+            # Follow the current tag
+            if action_flag is ACTION_FOLLOW:
+                has_reach_end = self.follow(current_tag)
+
+                if has_reach_end:
+                    action_flag = ACTION_NEXT_DIRECTION
         
-        last_right_dist = None
-        last_left_dist = None
+            # Decide the next action
+            elif action_flag is ACTION_NEXT_DIRECTION:
+                result = self.decide(current_tag)
 
-        normal_speed = 1
+            # Rotate LEFT until a new tag is found, then follow
+            elif action_flag is ACTION_TURN_LEFT:
+                new_tag_found, new_tag = self.rotate_to_next_tag(current_tag, "left")
 
-        wheel_speed = [0,0]
+                if new_tag_found:
+                    current_tag = new_tag
+                    action_flag = ACTION_FOLLOW
 
-        speed_left = normal_speed
-        speed_right = normal_speed
+            # Rotate RIGHT until a new tag is found, then follow
+            elif action_flag is ACTION_TURN_RIGHT:
+                new_tag_found, new_tag = self.rotate_to_next_tag(current_tag, "right")
 
-        threshold_detection_failure = 10
+                if new_tag_found:
+                    current_tag = new_tag
+                    action_flag = ACTION_FOLLOW
 
-        frames_failed_to_detect_tag = 0
-
-        while True:
-            # Not yet sure if undistorted images work better or worse for distance estimation
-            image_left = miro_per.caml_undistorted
-            image_right = miro_per.camr_undistorted
-
-            # Try to read April Tag and calculate the focal length
-            image_left, tags_left, focal_left = MiRoClient.getFocal(atp, image_left)
-            image_right, tags_right, focal_right = MiRoClient.getFocal(atp, image_right)
-
-            
-            if focal_left is not None:
-                last_left_dist = focal_left
-                
-            if focal_right is not None:
-                last_right_dist = focal_right
-            
-            
-            cv2.imshow('Left Camera: AprilTag calibration', image_left)
-            cv2.imshow('Right Camera: AprilTag calibration2', image_right)
+            for index, image in enumerate(self.images):
+                cv2.imshow('Camera %d: AprilTag calibration' % (index), image)
             cv2.waitKey(5)
-
-            
-            msg_cmd_vel = TwistStamped()
-
-            if not tags_left and not tags_right:
-                frames_failed_to_detect_tag += 1
-            else:
-                frames_failed_to_detect_tag = 0
-
-            # Failed to find tags for a while
-            if frames_failed_to_detect_tag >= threshold_detection_failure:
-                # Shake? Rotate? to find tag
-                speed_left = normal_speed
-                speed_right = -normal_speed
-            else:
-                # Tags found
-                # Adjust speed to follow the April Tag
-                if last_left_dist is not None and last_right_dist is not None:
-
-                    
-                    delta_focal = last_left_dist - last_right_dist
-                    
-                    speed_modifier = 0
-                    # we can use delta, ratio, etc...
-                    if delta_focal > 0:
-                        speed_modifier = 0.05
-                    else:
-                        speed_modifier = -0.05
-
-                    # last_delta?
-
-                    # last_left_dist / last_left_dist - last_right_dist
-
-                    
-                    speed_left = normal_speed + speed_modifier
-                    speed_right = normal_speed - speed_modifier
-
-                # Tags not found
-                # just move forward if hasn't seen both distances at least once
-                else:
-                    speed_left = normal_speed
-                    speed_right = normal_speed
-
-            wheel_speed = [speed_left, speed_right]
+            #time.sleep(0.01)
         
-            # Convert wheel speed to command velocity (m/sec, Rad/sec)
-            (dr, dtheta) = wheel_speed2cmd_vel(wheel_speed)
-
-            # Update the message with the desired speed
-            msg_cmd_vel.twist.linear.x = dr
-            msg_cmd_vel.twist.angular.z = dtheta
-
-            # Publish message to control/cmd_vel topic
-            self.vel_pub.publish(msg_cmd_vel)
-
 if __name__ == "__main__":
     main = MiRoClient()  # Instantiate class
     main.loop()  # Run the main control loop
