@@ -1,4 +1,11 @@
-from TMaze.utils import Utils
+from utils import Utils
+
+# MiRo-E interface
+import basic_functions.miro_ros_interface as mri
+# MiRo-E parameters
+import basic_functions.miro_constants as con
+from basic_functions.perception.apriltag_perception import AprilTagPerception
+
 import rospy
 
 import random
@@ -11,7 +18,6 @@ import os
 import numpy as np
 
 import cv2
-from TMaze.perception.apriltag_perception import AprilTagPerception
 
 try:  # For convenience, import this util separately
     from miro2.lib import wheel_speed2cmd_vel  # Python 3
@@ -21,11 +27,7 @@ except ImportError:
 from sensor_msgs.msg import JointState
 from geometry_msgs.msg import TwistStamped
 
-# MiRo-E interface
-import miro_ros_interface as mri
 
-# MiRo-E parameters
-import miro_constants as con
 
 # USAGE: Set MiRo in front of an example AprilTag
 # (See here: https://april.eecs.umich.edu/software/apriltag)
@@ -165,9 +167,7 @@ class MiRoClient:
             """
 
             # Method 2: Bounding 
-            speed_mod = Util.bound
-            bound = 0.05
-            speed_mod = max(min(d_delta, bound), -bound)
+            speed_mod = Utils.bound(d_delta, 0.05)
 
             # Method 3: Sigmoid
 
@@ -266,8 +266,9 @@ class MiRoClient:
                     current_tag = new_tag
                     action_flag = ACTION_FOLLOW
 
-            for index, image in enumerate(self.images):
-                cv2.imshow('Camera %d: AprilTag calibration' % (index), image)
+
+            numpy_horizontal = np.vstack(self.images)
+            cv2.imshow('Camera: AprilTag calibration', numpy_horizontal)
             cv2.waitKey(5)
         
 if __name__ == "__main__":
