@@ -28,9 +28,9 @@
         </geometry>
         <material>
           <script>
-            <uri>model://miro_tag3/materials/scripts</uri>
-            <uri>model://miro_tag3/materials/textures</uri>
-            <name>miro_tag3/Diffuse</name>
+            <uri>model://miro_tag5/materials/scripts</uri>
+            <uri>model://miro_tag5/materials/textures</uri>
+            <name>miro_tag5/Diffuse</name>
           </script>
         </material>
       </visual>
