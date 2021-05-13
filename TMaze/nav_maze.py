@@ -51,11 +51,11 @@ class MiRoClient:
 
     TAG_SIZE = 1
 
-    SPEED = 0.4
-    ROTATE_SPEED = 0.15
+    SPEED = 0.35
+    ROTATE_SPEED = 0.1
 
     DISTANCE_SAMPLE_SIZE = 5
-    THRESHOLD_DISTANCE = 2.25
+    THRESHOLD_DISTANCE = 2.5
     
     def __init__(self):
         # robot name
@@ -172,7 +172,7 @@ class MiRoClient:
         if self.target_tag in Maze.JUNCTIONS:
             threshold = MiRoClient.THRESHOLD_DISTANCE
         else:
-            threshold = MiRoClient.THRESHOLD_DISTANCE * 2 / 3
+            threshold = MiRoClient.THRESHOLD_DISTANCE
 
         # Return true if distance from either camera is within threshold
         return distances[0] and distances[0] < threshold or \

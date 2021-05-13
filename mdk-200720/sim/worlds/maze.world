@@ -40,7 +40,7 @@
       <real_time_update_rate>1000</real_time_update_rate>
     </physics>
     <scene>
-      <ambient>0.4 0.4 0.4 1</ambient>
+      <ambient>0.7 0.7 0.7 1</ambient>
       <background>0.7 0.7 0.7 1</background>
       <shadows>1</shadows>
     </scene>
@@ -1733,7 +1733,7 @@
       </model>
       <model name='tag'>
         <pose frame=''>4.4758 2.40703 -0.73304 -3.10652 1.55258 0.035081</pose>
-        <scale>1 1 1</scale>
+        <scale>0.5 0.5 1</scale>
         <link name='link'>
           <pose frame=''>4.4758 2.40703 -0.73304 -3.10652 1.55258 0.035081</pose>
           <velocity>0 0 0 0 -0 0</velocity>
@@ -1743,7 +1743,7 @@
       </model>
       <model name='tag_0'>
         <pose frame=''>7.81471 0.010888 -0.759206 -0.527055 1.5524 2.61446</pose>
-        <scale>1 1 1</scale>
+        <scale>0.5 0.5 1</scale>
         <link name='link'>
           <pose frame=''>7.81471 0.010888 -0.759206 -0.527055 1.5524 2.61446</pose>
           <velocity>0 0 0 0 -0 0</velocity>
@@ -1753,7 +1753,7 @@
       </model>
       <model name='tag_1'>
         <pose frame=''>7.20562 -3.65935 -0.746311 0.004771 -1.57079 -1.57369</pose>
-        <scale>1 1 1</scale>
+        <scale>0.5 0.5 1</scale>
         <link name='link'>
           <pose frame=''>7.20562 -3.65935 -0.746311 0.004771 -1.57079 -1.57369</pose>
           <velocity>0 0 0 0 -0 0</velocity>
@@ -1763,7 +1763,7 @@
       </model>
       <model name='tag_2'>
         <pose frame=''>7.18133 3.68906 -0.741205 -1e-06 -1.56717 1.56483</pose>
-        <scale>1 1 1</scale>
+        <scale>0.5 0.5 1</scale>
         <link name='link'>
           <pose frame=''>7.18133 3.68906 -0.741205 -1e-06 -1.56717 1.56483</pose>
           <velocity>0 0 0 0 -0 0</velocity>
@@ -1773,7 +1773,7 @@
       </model>
       <model name='tag_3'>
         <pose frame=''>3.84223 -5.50261 -0.750524 -1.56319 -1.5636 -2e-06</pose>
-        <scale>1 1 1</scale>
+        <scale>0.5 0.5 1</scale>
         <link name='link'>
           <pose frame=''>3.84223 -5.50261 -0.750524 -1.56319 -1.5636 -2e-06</pose>
           <velocity>0 0 0 0 -0 0</velocity>
@@ -1783,7 +1783,7 @@
       </model>
       <model name='tag_4'>
         <pose frame=''>3.86093 0.880379 -0.751317 -1.56815 -1.56181 -3.14159</pose>
-        <scale>1 1 1</scale>
+        <scale>0.5 0.5 1</scale>
         <link name='link'>
           <pose frame=''>3.86093 0.880379 -0.751317 -1.56815 -1.56181 -3.14159</pose>
           <velocity>0 0 0 0 -0 0</velocity>
@@ -1793,7 +1793,7 @@
       </model>
       <model name='tag_5'>
         <pose frame=''>3.85693 -0.974383 -0.741275 1.57542 -1.56424 3.14159</pose>
-        <scale>1 1 1</scale>
+        <scale>0.5 0.5 1</scale>
         <link name='link'>
           <pose frame=''>3.85693 -0.974383 -0.741275 1.57542 -1.56424 3.14159</pose>
           <velocity>0 0 0 0 -0 0</velocity>
@@ -1803,7 +1803,7 @@
       </model>
       <model name='tag_6'>
         <pose frame=''>3.86486 5.56969 -0.748949 -1.58619 -1.55454 -3.14159</pose>
-        <scale>1 1 1</scale>
+        <scale>0.5 0.5 1</scale>
         <link name='link'>
           <pose frame=''>3.86486 5.56969 -0.748949 -1.58619 -1.55454 -3.14159</pose>
           <velocity>0 0 0 0 -0 0</velocity>
@@ -1813,7 +1813,7 @@
       </model>
       <model name='tag_8'>
         <pose frame=''>4.4777 -2.35807 -0.743277 -1.16295 1.56828 1.97864</pose>
-        <scale>1 1 1</scale>
+        <scale>0.5 0.5 1</scale>
         <link name='link'>
           <pose frame=''>4.4777 -2.35807 -0.743277 -1.16295 1.56828 1.97864</pose>
           <velocity>0 0 0 0 -0 0</velocity>
