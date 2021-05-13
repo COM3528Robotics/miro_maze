@@ -42,20 +42,20 @@ class MiRoClient:
     FAST = 0.7  # Linear speed when kicking the ball (m/s)
     DEBUG = True  # Set to True to enable debug views of the cameras
 
-    DEBUG_SPEED = True
-    DEBUG_EST = True
+    DEBUG_SPEED = False
+    DEBUG_EST = False
     DEBUG_ACTION = True
-    DEBUG_FOLLOW = True
+    DEBUG_FOLLOW = False
     DEBUG_DECISION = True
 
 
     TAG_SIZE = 1
 
-    SPEED = 0.35
-    ROTATE_SPEED = 0.1
+    SPEED = 0.30
+    ROTATE_SPEED = 0.025
 
     DISTANCE_SAMPLE_SIZE = 5
-    THRESHOLD_DISTANCE = 2.5
+    THRESHOLD_DISTANCE = 1.9
     
     def __init__(self):
         # robot name
@@ -111,16 +111,17 @@ class MiRoClient:
             
             tag_distance = None
             tag_centre_x = None
+            
 
             if detected_tags:
                 for tag in detected_tags:
+
                     if tag.id == target_tag:
                         tag_distance = tag.distance
                         tag_centre_x = tag.centre[0]
 
                         # Print distance on screen
                         if MiRoClient.DEBUG:
-                            self.atp.draw_box(image, tag, colour='green')
                             self.atp.draw_center(image, tag, colour='red')
                             cv2.putText(image, "Distance: %s" % (str(tag_distance)), tuple(tag.corners[1]),
                                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 255), 2)
@@ -249,8 +250,8 @@ class MiRoClient:
                     self.set_wheel_speed(MiRoClient.ROTATE_SPEED, -MiRoClient.ROTATE_SPEED)
 
                 new_tag = self.detect_new_tag()
-
-                if new_tag:
+                
+                if new_tag is not None:
                     self.target_tag = new_tag
                     self.action = Action.FOLLOW
 

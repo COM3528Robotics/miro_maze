@@ -6,8 +6,8 @@ class Action:
 
 class Maze:
     # Arrays of tag IDs
-    END_TAGS = []
-    REWARDS = []
+    END_TAGS = [3, 4, 5, 6]
+    REWARDS = [3]
     PUNISHMENT = []
 
     JUNCTIONS = [0]
