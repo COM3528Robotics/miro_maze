@@ -1,3 +1,4 @@
+from TMaze.utils import Utils
 import rospy
 
 import random
@@ -10,7 +11,7 @@ import os
 import numpy as np
 
 import cv2
-from apriltag_perception import AprilTagPerception
+from TMaze.perception.apriltag_perception import AprilTagPerception
 
 try:  # For convenience, import this util separately
     from miro2.lib import wheel_speed2cmd_vel  # Python 3
@@ -18,9 +19,8 @@ except ImportError:
     from miro2.utils import wheel_speed2cmd_vel  # Python 2
 
 from sensor_msgs.msg import JointState
-
-# ROS cmd_vel (velocity control) message
 from geometry_msgs.msg import TwistStamped
+
 # MiRo-E interface
 import miro_ros_interface as mri
 
@@ -138,28 +138,21 @@ class MiRoClient:
         """Follow a april tag and return True if MiRo reaches the tag, else False"""
 
         distances = self.estimate_distance(tag_id)
-
+        d = [0, 0]
         for index in [0, 1]:
             self.buffer_distance[index] = np.append(self.buffer_distance[index], distances[index])
             self.buffer_distance[index] = self.buffer_distance[index][-MiRoClient.BUFFER_SIZE_DISTANCE:]
 
-        try:
-            d_left = stat.mean([d for d in self.buffer_distance[0] if d is not None])
-        except:
-            d_left = None
-
-        try:
-            d_right = stat.mean([d for d in self.buffer_distance[1] if d is not None])
-        except:
-            d_right = None
-
+            try:
+                d[index] = stat.mean([d for d in self.buffer_distance[index] if d is not None])
+            except:
+                d[index] = None
+        
+        d_left = d[0]
+        d_right = d[1]
+        
         print("Average distance %s %s" % (str(d_left), str(d_right)))
-
-        """
-        d_left = distances[0]
-        d_right = distances[1]
-        """
-
+        
         speed_left_mod = 0
         speed_right_mod = 0
 
@@ -172,6 +165,7 @@ class MiRoClient:
             """
 
             # Method 2: Bounding 
+            speed_mod = Util.bound
             bound = 0.05
             speed_mod = max(min(d_delta, bound), -bound)
 
@@ -206,7 +200,20 @@ class MiRoClient:
         return d_left and d_left < MiRoClient.THRESHOLD_DISTANCE or \
             d_right and d_right < MiRoClient.THRESHOLD_DISTANCE
 
+    def detect_new_tag(self, current_tag_id):
+        new_tag_id = None
 
+        for index, image in enumerate(self.images):
+            if new_tag_id is not None:
+                detected_tags = self.atp.detect_tags(image)
+
+                if detected_tags:
+                    for tag in detected_tags:
+                        if tag.id is not current_tag_id:
+                            new_tag = tag.id
+                            break
+
+        return new_tag_id
 
     def loop(self):
         ACTION_FOLLOW = 1
@@ -240,29 +247,28 @@ class MiRoClient:
                 # TODO
                 if result == 'left':
                     action_flag = ACTION_TURN_LEFT
-                elif result == "right"
+                elif result == "right":
                     action_flag = ACTION_TURN_RIGHT
 
-            # Rotate LEFT until a new tag is found, then follow
-            elif action_flag is ACTION_TURN_LEFT:
-                new_tag_found, new_tag = self.rotate_to_next_tag(current_tag, "left")
+            # Rotate until a new tag is found, then change action to FOLLOW
+            else: 
+                # Rotate LEFT
+                if action_flag is ACTION_TURN_LEFT:
+                    self.set_wheel_speed(-MiRoClient.SPEED, MiRoClient.SPEED)
 
-                if new_tag_found:
-                    current_tag = new_tag
-                    action_flag = ACTION_FOLLOW
+                # Rotate RIGHT
+                else:
+                    self.set_wheel_speed(MiRoClient.SPEED, +MiRoClient.SPEED)
 
-            # Rotate RIGHT until a new tag is found, then follow
-            elif action_flag is ACTION_TURN_RIGHT:
-                new_tag_found, new_tag = self.rotate_to_next_tag(current_tag, "right")
+                new_tag = self.detect_new_tag(current_tag)
 
-                if new_tag_found:
+                if new_tag is not None:
                     current_tag = new_tag
                     action_flag = ACTION_FOLLOW
 
             for index, image in enumerate(self.images):
                 cv2.imshow('Camera %d: AprilTag calibration' % (index), image)
             cv2.waitKey(5)
-            #time.sleep(0.01)
         
 if __name__ == "__main__":
     main = MiRoClient()  # Instantiate class
