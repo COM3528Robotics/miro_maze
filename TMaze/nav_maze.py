@@ -1,3 +1,6 @@
+from Follow import Follow
+from Learning import Learning
+from constants import Action, Maze
 from utils import Utils
 
 # MiRo-E interface
@@ -27,15 +30,6 @@ except ImportError:
 from sensor_msgs.msg import JointState
 from geometry_msgs.msg import TwistStamped
 
-
-
-# USAGE: Set MiRo in front of an example AprilTag
-# (See here: https://april.eecs.umich.edu/software/apriltag)
-# Enter the actual size of the tag and the distance from the camera, and ensure focal_length == None
-# Run the script and note down the focal length given
-# Enter the focal length and re-run the script; adjust MiRo's distance from the tag and check for accuracy
-
-
 class MiRoClient:
 
     """
@@ -46,57 +40,47 @@ class MiRoClient:
     NODE_EXISTS = False  # Disables (True) / Enables (False) rospy.init_node
     SLOW = 0.1  # Radial speed when turning on the spot (rad/s)
     FAST = 0.7  # Linear speed when kicking the ball (m/s)
-    DEBUG = False  # Set to True to enable debug views of the cameras
+    DEBUG = True  # Set to True to enable debug views of the cameras
+
+    DEBUG_SPEED = True
+    DEBUG_EST = True
+    DEBUG_ACTION = True
+    DEBUG_FOLLOW = True
+    DEBUG_DECISION = True
+
 
     TAG_SIZE = 1
 
-    SPEED = 1
+    SPEED = 0.4
+    ROTATE_SPEED = 0.15
 
-    BUFFER_SIZE_DISTANCE = 10
-    THRESHOLD_DISTANCE = 2
-        
-
+    DISTANCE_SAMPLE_SIZE = 5
+    THRESHOLD_DISTANCE = 2.25
+    
     def __init__(self):
         # robot name
         topic_base_name = "/" + os.getenv("MIRO_ROBOT_NAME")
         
-        self.vel_pub = rospy.Publisher(
-            topic_base_name + "/control/cmd_vel", TwistStamped, queue_size=0
-        )
-
-        # Create a new publisher to move the robot head
-        self.pub_kin = rospy.Publisher(
-            topic_base_name + "/control/kinematic_joints", JointState, queue_size=0
-        )
+        self.vel_pub = rospy.Publisher(topic_base_name + "/control/cmd_vel", TwistStamped, queue_size=0)
+        self.pub_kin = rospy.Publisher(topic_base_name + "/control/kinematic_joints", JointState, queue_size=0)
 
         self.miro_per = mri.MiRoPerception()
         self.atp = AprilTagPerception(size=MiRoClient.TAG_SIZE, family='tag36h11')
 
+        self.action = Action.FOLLOW
+        self.target_tag = 0 # current target
+        self.previous_decision_tag = None # the last tag it used to make a decision
+        self.previous_action = None # the last action it made
+        
+        self.learning_model = Learning() # WIP but functional
+
         self.buffer_distance = [np.array([]), np.array([])]
-
-    def decide(self, tag_id):
-        decision = ""
-
-        # reinforcment learning descision
-        # hidden left
-        if tag_id == 0:
-            decision = random.choice(["left", "right"])
-        # hidden right
-        elif tag_id == 3:
-            decision = random.choice(["left", "right"])
-
-        # fixed
-        elif tag_id == 1:
-            decision = 'left'
-        elif tag_id == 2:
-            decision = 'right'
-            
-        return decision
 
     def set_wheel_speed(self, speed_left, speed_right):
         """Set Miro's wheel speed"""
         wheel_speed = [speed_left, speed_right]
-        if MiRoClient.DEBUG: print("Current Speed: %.2f, %.2f" % (speed_left, speed_right))
+
+        if MiRoClient.DEBUG_SPEED: print("Current Speed: %.2f, %.2f" % (speed_left, speed_right))
 
         # Convert wheel speed to command velocity (m/sec, Rad/sec)
         (dr, dtheta) = wheel_speed2cmd_vel(wheel_speed)
@@ -109,18 +93,30 @@ class MiRoClient:
         # Publish message to control/cmd_vel topic
         self.vel_pub.publish(msg_cmd_vel)
 
-    def estimate_distance(self, tag_id):
+    def detect_new_tag(self):
+        for index, image in enumerate(self.images):
+            detected_tags = self.atp.detect_tags(image)
+
+            if detected_tags:
+                for tag in detected_tags:
+                    if tag.id is not self.target_tag:
+                        return tag.id
+
+    def estimate_distance(self, target_tag):
         """Return a list of estimated distances to a specific tag for each given image"""
-        estimated_distances = []
+        tags_centre_x = []
+        distances = []
         for index, image in enumerate(self.images):
             detected_tags = self.atp.detect_tags(image)
             
             tag_distance = None
+            tag_centre_x = None
 
             if detected_tags:
                 for tag in detected_tags:
-                    if tag.id == tag_id:
+                    if tag.id == target_tag:
                         tag_distance = tag.distance
+                        tag_centre_x = tag.centre[0]
 
                         # Print distance on screen
                         if MiRoClient.DEBUG:
@@ -131,102 +127,94 @@ class MiRoClient:
 
                         break
 
-            estimated_distances.append(tag_distance)
+            distances.append(tag_distance)
+            tags_centre_x.append(tag_centre_x)
 
-        if MiRoClient.DEBUG: print("Estimated distance to tag %d are: %s" % (tag_id, str(estimated_distances)))
-        return estimated_distances
+        if MiRoClient.DEBUG_EST: print("Estimated distance to tag %d are: %s" % (self.target_tag, str(distances)))
+        return distances, tags_centre_x
 
-    def follow(self, tag_id):
+    # TODO: Fix following
+    def follow(self):
         """Follow a april tag and return True if MiRo reaches the tag, else False"""
 
-        distances = self.estimate_distance(tag_id)
-        d = [0, 0]
+        distances, dist_to_centre = self.estimate_distance(self.target_tag)
+        
         for index in [0, 1]:
-            self.buffer_distance[index] = np.append(self.buffer_distance[index], distances[index])
-            self.buffer_distance[index] = self.buffer_distance[index][-MiRoClient.BUFFER_SIZE_DISTANCE:]
+            self.buffer_distance[index] = np.append(self.buffer_distance[index], dist_to_centre[index])
+            self.buffer_distance[index] = self.buffer_distance[index][-MiRoClient.DISTANCE_SAMPLE_SIZE:]
 
             try:
-                d[index] = stat.mean([d for d in self.buffer_distance[index] if d is not None])
+                if dist_to_centre[index] is None:
+                    dist_to_centre[index] = stat.mean([d for d in self.buffer_distance[index] if d is not None])
             except:
-                d[index] = None
+                # If eye cannot see tag, assume its too far away
+                dist_to_centre[index] = 640 if index == 0 else 0
         
-        d_left = d[0]
-        d_right = d[1]
+        d_left = 640 - dist_to_centre[0]
+        d_right = dist_to_centre[1]
         
-        print("Average distance %s %s" % (str(d_left), str(d_right)))
-        
-        speed_left_mod = 0
-        speed_right_mod = 0
+        if MiRoClient.DEBUG_FOLLOW: print("Average distance: %s, %s" % (str(distances[0]), str(distances[1])))
+        if MiRoClient.DEBUG_FOLLOW: print("Average distance: %s px, %s px" % (str(d_left), str(d_right)))
 
         # Tag is seen by both camera
-        if d_left and d_right:
-            d_delta = d_left - d_right
+        if d_left or d_right:
+            # Calculate steering
+            speed_left, speed_right = Follow.rule_delta_linear(d_left, d_right, scale=1/800, cap=100)
 
-            """ Method 1: linear
-            speed_mod = d_delta
-            """
+            base_speed = MiRoClient.SPEED - min(speed_left + speed_right, MiRoClient.SPEED)
 
-            # Method 2: Bounding 
-            speed_mod = Utils.bound(d_delta, 0.05)
-
-            # Method 3: Sigmoid
-
-            # if d_delta is positive, left camera is further away,
-            # so left wheel need to slow down,
-            # and vice versa
-            speed_left_mod = -speed_mod
-            speed_right_mod = speed_mod
-
-        # Tag is only seen by one camera
-        elif d_left or d_right:
-            speed = 0.5
-            speed_left_mod = -speed if d_left else speed
-            speed_right_mod = -speed if d_right else speed
-
-            speed_left_mod -= MiRoClient.SPEED
-            speed_right_mod -= MiRoClient.SPEED 
-
+            self.set_wheel_speed(base_speed - speed_left, base_speed - speed_right)
         # Cannot detect tag
         else:
-            speed_left_mod = 0
-            speed_right_mod = 0
+            speed = MiRoClient.ROTATE_SPEED
+            self.set_wheel_speed(0.01, -0.01)
 
-        speed_left = MiRoClient.SPEED + speed_left_mod
-        speed_right = MiRoClient.SPEED + speed_right_mod
-
-        self.set_wheel_speed(speed_left, speed_right)
+        if self.target_tag in Maze.JUNCTIONS:
+            threshold = MiRoClient.THRESHOLD_DISTANCE
+        else:
+            threshold = MiRoClient.THRESHOLD_DISTANCE * 2 / 3
 
         # Return true if distance from either camera is within threshold
-        return d_left and d_left < MiRoClient.THRESHOLD_DISTANCE or \
-            d_right and d_right < MiRoClient.THRESHOLD_DISTANCE
+        return distances[0] and distances[0] < threshold or \
+            distances[1] and distances[1] < threshold
 
-    def detect_new_tag(self, current_tag_id):
-        new_tag_id = None
+    # needs to have the current state as a param
+        # and the previous seen descision tag
+    def make_decision(self):
+        """ Make decision """
+        # TODO: Reached ending tag 
+        if self.target_tag in Maze.END_TAGS:
+            if self.target_tag in Maze.REWARDS:
+                self.learning_model.learn(self.previous_decision_tag, self.previous_action, 1)
+            else:
+                self.learning_model.learn(self.previous_decision_tag, self.previous_action, -1)
 
-        for index, image in enumerate(self.images):
-            if new_tag_id is not None:
-                detected_tags = self.atp.detect_tags(image)
+        # reinforcment learning descision
+        elif self.target_tag in Maze.JUNCTIONS:
+            self.learning_model.learn(
+                self.previous_decision_tag, 
+                self.previous_action, 
+                self.learning_model.predict_next_reward(self.target_tag)
+            )
+            # self.action = random.choice([Action.TURN_LEFT, Action.TURN_RIGHT])
+            self.action = self.learning_model.decide()
+        
+        # corners to the left
+        elif self.target_tag in Maze.CORNERS_LEFT:
+            self.action = Action.TURN_LEFT
 
-                if detected_tags:
-                    for tag in detected_tags:
-                        if tag.id is not current_tag_id:
-                            new_tag = tag.id
-                            break
+        # corners to the right
+        else:
+            self.action = Action.TURN_RIGHT
 
-        return new_tag_id
+        if MiRoClient.DEBUG_DECISION: 
+            if self.action is Action.TURN_LEFT:
+                print("Deciding to turn left")
+            else:
+                print("Deciding to turn right")
 
     def loop(self):
-        ACTION_FOLLOW = 1
-        ACTION_TURN_LEFT = 2
-        ACTION_TURN_RIGHT = 3
-        ACTION_NEXT_DIRECTION = 4
-
-        MiRoClient.SPEED = 0.5
-
-        MiRoClient.DEBUG = True
-
-        current_tag = 0
-        action_flag = ACTION_FOLLOW
+        
         continue_condition = True
 
         while(continue_condition):
@@ -234,42 +222,43 @@ class MiRoClient:
             self.images = [self.miro_per.caml_undistorted, self.miro_per.camr_undistorted]
 
             # Follow the current tag
-            if action_flag is ACTION_FOLLOW:
-                has_reach_end = self.follow(current_tag)
+            if self.action is Action.FOLLOW:
 
+                has_reach_end = self.follow()
+
+                # Make decision when it reaches the tag
                 if has_reach_end:
-                    action_flag = ACTION_NEXT_DIRECTION
+                    self.action = Action.MAKE_DECISION
+
+                    if MiRoClient.DEBUG_ACTION: print("Making Decision")
         
             # Decide the next action
-            elif action_flag is ACTION_NEXT_DIRECTION:
-                result = self.decide(current_tag)
-
-                # TODO
-                if result == 'left':
-                    action_flag = ACTION_TURN_LEFT
-                elif result == "right":
-                    action_flag = ACTION_TURN_RIGHT
+            elif self.action is Action.MAKE_DECISION:
+                self.make_decision()
+                self.previous_action = self.action
+                self.previous_decision_tag = self.target_tag
 
             # Rotate until a new tag is found, then change action to FOLLOW
             else: 
                 # Rotate LEFT
-                if action_flag is ACTION_TURN_LEFT:
-                    self.set_wheel_speed(-MiRoClient.SPEED, MiRoClient.SPEED)
+                if self.action is Action.TURN_LEFT:
+                    self.set_wheel_speed(-MiRoClient.ROTATE_SPEED, MiRoClient.ROTATE_SPEED)
 
                 # Rotate RIGHT
                 else:
-                    self.set_wheel_speed(MiRoClient.SPEED, +MiRoClient.SPEED)
+                    self.set_wheel_speed(MiRoClient.ROTATE_SPEED, -MiRoClient.ROTATE_SPEED)
 
-                new_tag = self.detect_new_tag(current_tag)
+                new_tag = self.detect_new_tag()
 
-                if new_tag is not None:
-                    current_tag = new_tag
-                    action_flag = ACTION_FOLLOW
+                if new_tag:
+                    self.target_tag = new_tag
+                    self.action = Action.FOLLOW
 
+                    if MiRoClient.DEBUG_ACTION: print("Following tag %d" % self.target_tag)
 
-            numpy_horizontal = np.vstack(self.images)
-            cv2.imshow('Camera: AprilTag calibration', numpy_horizontal)
-            cv2.waitKey(5)
+            # Show Camera feeds
+            cv2.imshow('Camera: AprilTag calibration', np.hstack(self.images))
+            cv2.waitKey(50)
         
 if __name__ == "__main__":
     main = MiRoClient()  # Instantiate class
