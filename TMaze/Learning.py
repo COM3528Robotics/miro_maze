@@ -26,6 +26,10 @@ class Learning:
         
         predicted_left = self.predicted_reward.get((current_state, Action.TURN_LEFT), self.default_prediction)
         predicted_right = self.predicted_reward.get((current_state, Action.TURN_RIGHT), self.default_prediction)
+        
+        print("Current State: %s, Predicted Left: %s, Right: %s" %\
+            (current_state, predicted_left, predicted_right))
+        
         if predicted_left == predicted_right:
             return random.choice([Action.TURN_LEFT, Action.TURN_RIGHT])
 
@@ -41,6 +45,10 @@ class Learning:
         return random.choice([Action.TURN_LEFT, Action.TURN_RIGHT])
 
     def learn(self, previous_state, previous_action, reward):
+        if previous_state is None or previous_action is None:
+            return
+
+        print("Previous State: %s, Previous Action: %s" % (previous_state, previous_action))
         predicted_reward = self.predicted_reward.get((previous_state, previous_action), self.default_prediction)
 
         # if the state reached is not a reward state, calculate reward using max predicted reward of next action
@@ -62,6 +70,8 @@ class Learning:
     def read(self):
         try:
             self.predicted_reward = pickle.load(open('learned_predictions', 'rb'))
+            print("Read Success!")
+            print(self.predicted_reward)
         except error:
             print(error)
 

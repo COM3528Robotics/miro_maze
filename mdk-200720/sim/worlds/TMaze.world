@@ -1959,9 +1959,9 @@
           </geometry>
           <material>
             <script>
-              <uri>model://miro_tag/materials/scripts</uri>
-              <uri>model://miro_tag/materials/textures</uri>
-              <name>miro_tag/Diffuse</name>
+              <uri>model://miro_tag7/materials/scripts</uri>
+              <uri>model://miro_tag7/materials/textures</uri>
+              <name>miro_tag7/Diffuse</name>
             </script>
           </material>
         </visual>
@@ -2007,9 +2007,9 @@
           </geometry>
           <material>
             <script>
-              <uri>model://miro_tag/materials/scripts</uri>
-              <uri>model://miro_tag/materials/textures</uri>
-              <name>miro_tag/Diffuse</name>
+              <uri>model://miro_tag8/materials/scripts</uri>
+              <uri>model://miro_tag8/materials/textures</uri>
+              <name>miro_tag8/Diffuse</name>
             </script>
           </material>
         </visual>

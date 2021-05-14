@@ -184,25 +184,33 @@ class MiRoClient:
     def make_decision(self):
         """ Make decision """
         # TODO: Reached ending tag 
-        print("Last tag is: %s, Last Action is: %s" % (self.previous_decision_tag, self.previous_action)) 
+        print("Current tag: %s, Last tag is: %s, Last Action is: %s" %\
+            (self.target_tag, self.previous_decision_tag, self.previous_action)) 
+        
         if self.target_tag in Maze.END_TAGS:
             if self.target_tag in Maze.REWARDS:
                 self.learning_model.learn(self.previous_decision_tag, self.previous_action, 1)
             else:
                 self.learning_model.learn(self.previous_decision_tag, self.previous_action, -1)
 
+            print("final learned predictions")
+            print(self.learning_model.predicted_reward)
             self.learning_model.export()
             self.action = Action.STOP
 
         # reinforcment learning descision
         elif self.target_tag in Maze.JUNCTIONS:
+            if MiRoClient.DEBUG_ACTION: print("Making Decision")
+
             self.learning_model.learn(
                 self.previous_decision_tag, 
                 self.previous_action, 
                 self.learning_model.predict_next_reward(self.target_tag)
             )
             # self.action = random.choice([Action.TURN_LEFT, Action.TURN_RIGHT])
-            self.action = self.learning_model.decide()
+            self.action = self.learning_model.decide(self.target_tag)
+            self.previous_action = self.action
+            self.previous_decision_tag = self.target_tag
         
         # corners to the left
         elif self.target_tag in Maze.CORNERS_LEFT:
@@ -234,14 +242,10 @@ class MiRoClient:
                 # Make decision when it reaches the tag
                 if has_reach_end:
                     self.action = Action.MAKE_DECISION
-
-                    if MiRoClient.DEBUG_ACTION: print("Making Decision")
         
             # Decide the next action
             elif self.action is Action.MAKE_DECISION:
                 self.make_decision()
-                self.previous_action = self.action
-                self.previous_decision_tag = self.target_tag
 
             # Rotate until a new tag is found, then change action to FOLLOW
             else: 
