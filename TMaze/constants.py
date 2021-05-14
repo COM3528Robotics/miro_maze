@@ -3,6 +3,7 @@ class Action:
     TURN_LEFT = 2
     TURN_RIGHT = 3
     MAKE_DECISION = 4
+    STOP = 5
 
 class Maze:
     # Arrays of tag IDs

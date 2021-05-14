@@ -1,10 +1,11 @@
+from os import error
 import random
 import pickle
 
 from constants import *
 
 class Learning:
-    def __init__(self, default_prediction=0, learning_rate=1, behaviour=Behaviour.GREEDY):
+    def __init__(self, default_prediction=0, learning_rate=1, behaviour=Behaviour.GREEDY, read_predictions=False):
         # dict of predicted rewards, updates as it learns
         # keys are a pair of state and action
             # self.predicted_reward[some_state, action_taken] = predicted_reward
@@ -15,6 +16,10 @@ class Learning:
         self.default_prediction = default_prediction
         self.learning_rate = learning_rate
         self.behaviour = behaviour
+
+        # only read if there's something there
+        if read_predictions:
+            self.read()
 
     # current state is the tag it is seeing right now
     def decide(self, current_state=None):
@@ -55,8 +60,11 @@ class Learning:
         return max(predicted_left, predicted_right)
 
     def read(self):
-        self.predicted_reward = pickle.load(open('learned_predictions', 'rb'))
+        try:
+            self.predicted_reward = pickle.load(open('learned_predictions', 'rb'))
+        except error:
+            print(error)
 
     def export(self):
-        pickle.dump(index, open('learned_predictions','wb'))
+        pickle.dump(self.predicted_reward, open('learned_predictions','wb'))
         

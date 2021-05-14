@@ -51,8 +51,8 @@ class MiRoClient:
 
     TAG_SIZE = 1
 
-    SPEED = 0.30
-    ROTATE_SPEED = 0.025
+    SPEED = 0.33
+    ROTATE_SPEED = 0.05
 
     DISTANCE_SAMPLE_SIZE = 5
     THRESHOLD_DISTANCE = 1.9
@@ -72,7 +72,7 @@ class MiRoClient:
         self.previous_decision_tag = None # the last tag it used to make a decision
         self.previous_action = None # the last action it made
         
-        self.learning_model = Learning() # WIP but functional
+        self.learning_model = Learning(read_predictions=True) # WIP but functional
 
         self.buffer_distance = [np.array([]), np.array([])]
 
@@ -184,11 +184,15 @@ class MiRoClient:
     def make_decision(self):
         """ Make decision """
         # TODO: Reached ending tag 
+        print("Last tag is: %s, Last Action is: %s" % (self.previous_decision_tag, self.previous_action)) 
         if self.target_tag in Maze.END_TAGS:
             if self.target_tag in Maze.REWARDS:
                 self.learning_model.learn(self.previous_decision_tag, self.previous_action, 1)
             else:
                 self.learning_model.learn(self.previous_decision_tag, self.previous_action, -1)
+
+            self.learning_model.export()
+            self.action = Action.STOP
 
         # reinforcment learning descision
         elif self.target_tag in Maze.JUNCTIONS:
@@ -218,7 +222,7 @@ class MiRoClient:
         
         continue_condition = True
 
-        while(continue_condition):
+        while(self.action is not Action.STOP):
             # Update robot vision
             self.images = [self.miro_per.caml_undistorted, self.miro_per.camr_undistorted]
 
